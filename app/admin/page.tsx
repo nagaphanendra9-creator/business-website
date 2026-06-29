@@ -10,7 +10,11 @@ export default function AdminPage() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
 
-  const [editingId, setEditingId] = useState("");
+  const [imageFile, setImageFile] =
+    useState<File | null>(null);
+
+  const [editingId, setEditingId] =
+    useState("");
 
   async function loadProducts() {
     const res = await fetch("/api/allproducts");
@@ -23,72 +27,87 @@ export default function AdminPage() {
   }, []);
 
   async function addProduct() {
+
+    const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append(
+      "description",
+      description
+    );
+    formData.append(
+      "price",
+      price
+    );
+    formData.append(
+      "category",
+      category
+    );
+
+    if (imageFile) {
+      formData.append(
+        "image",
+        imageFile
+      );
+    }
+
     await fetch("/api/products", {
-      method: "POST",
-      headers: {
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify({
-        name,
-        description,
-        price: Number(price),
-        category,
-        imageUrl: "/products/default.jpg"
-      })
+      method:"POST",
+      body:formData
     });
 
     clearForm();
     loadProducts();
   }
 
-  async function updateProduct() {
-    await fetch(`/api/products/${editingId}`, {
-      method:"PUT",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify({
-        name,
-        description,
-        price:Number(price),
-        category
-      })
-    });
-
-    clearForm();
-    loadProducts();
-  }
-
-  async function deleteProduct(id:string){
-    await fetch(`/api/products/${id}`,{
-      method:"DELETE"
-    });
+  async function deleteProduct(
+    id:string
+  ) {
+    await fetch(
+      `/api/products/${id}`,
+      {
+        method:"DELETE"
+      }
+    );
 
     loadProducts();
   }
 
-  function editProduct(product:any){
+  function editProduct(
+    product:any
+  ) {
     setEditingId(product.id);
 
     setName(product.name);
-    setPrice(product.price.toString());
-    setDescription(product.description);
-    setCategory(product.category || "");
+    setPrice(
+      product.price.toString()
+    );
+    setDescription(
+      product.description
+    );
+    setCategory(
+      product.category || ""
+    );
   }
 
-  function clearForm(){
+  function clearForm() {
+
     setEditingId("");
 
     setName("");
     setPrice("");
     setDescription("");
     setCategory("");
+
+    setImageFile(null);
   }
 
   return (
     <div style={{padding:"40px"}}>
 
-      <h1>Owner Dashboard</h1>
+      <h1>
+        Owner Dashboard
+      </h1>
 
       <div
         style={{
@@ -97,16 +116,19 @@ export default function AdminPage() {
           marginBottom:"20px"
         }}
       >
+
         <h2>
-          {editingId
-            ? "Edit Product"
-            : "Add New Product"}
+          Add New Product
         </h2>
 
         <input
           placeholder="Product Name"
           value={name}
-          onChange={(e)=>setName(e.target.value)}
+          onChange={(e)=>
+            setName(
+              e.target.value
+            )
+          }
         />
 
         <br/><br/>
@@ -114,7 +136,11 @@ export default function AdminPage() {
         <input
           placeholder="Price"
           value={price}
-          onChange={(e)=>setPrice(e.target.value)}
+          onChange={(e)=>
+            setPrice(
+              e.target.value
+            )
+          }
         />
 
         <br/><br/>
@@ -122,7 +148,11 @@ export default function AdminPage() {
         <textarea
           placeholder="Description"
           value={description}
-          onChange={(e)=>setDescription(e.target.value)}
+          onChange={(e)=>
+            setDescription(
+              e.target.value
+            )
+          }
         />
 
         <br/><br/>
@@ -130,43 +160,81 @@ export default function AdminPage() {
         <input
           placeholder="Category"
           value={category}
-          onChange={(e)=>setCategory(e.target.value)}
+          onChange={(e)=>
+            setCategory(
+              e.target.value
+            )
+          }
         />
 
         <br/><br/>
 
-        {editingId ? (
-          <button onClick={updateProduct}>
-            Save Changes
-          </button>
-        ) : (
-          <button onClick={addProduct}>
-            Add Product
-          </button>
-        )}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e)=>{
+            if(
+              e.target.files
+            ){
+              setImageFile(
+                e.target.files[0]
+              );
+            }
+          }}
+        />
+
+        <br/><br/>
+
+        <button
+          onClick={addProduct}
+        >
+          Add Product
+        </button>
 
       </div>
 
-      <h2>Manage Products</h2>
+      <h2>
+        Manage Products
+      </h2>
 
-      {products.map((product:any)=>(
+      {products.map(
+        (product:any)=>(
         <div
           key={product.id}
           style={{
-            border:"1px solid gray",
+            border:
+            "1px solid gray",
             padding:"10px",
             marginBottom:"10px"
           }}
         >
-          <h3>{product.name}</h3>
 
-          <p>{product.description}</p>
+          <img
+            src={
+              product.imageUrl
+            }
+            width={100}
+            alt={
+              product.name
+            }
+          />
+
+          <h3>
+            {product.name}
+          </h3>
 
           <p>
-            Category: {product.category}
+            {product.description}
           </p>
 
-          <p>₹{product.price}</p>
+          <p>
+            Category:
+            {product.category}
+          </p>
+
+          <p>
+            ₹{product.price}
+          </p>
 
           <div
             style={{
@@ -176,16 +244,20 @@ export default function AdminPage() {
           >
             <button
               onClick={()=>
-                editProduct(product)
-              }
+              editProduct(
+                product
+              )
+            }
             >
               Edit
             </button>
 
             <button
               onClick={()=>
-                deleteProduct(product.id)
-              }
+              deleteProduct(
+                product.id
+              )
+            }
             >
               Delete
             </button>

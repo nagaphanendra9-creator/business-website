@@ -10,11 +10,11 @@ export default function Footer() {
     >
       <h3>My Business</h3>
 
-      <p>Phone: +91 9999999999</p>
+      <p>Phone: +91 7075629604</p>
 
-      <p>Email: business@gmail.com</p>
+      <p>Email: nagaphanendra9@gmail.com</p>
 
-      <p>Address: Your Business Address</p>
+      <p>official instagram page: Vinatge_Ghar </p>
     </footer>
   );
 }

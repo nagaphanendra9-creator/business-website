@@ -4,12 +4,14 @@ import FeaturedProducts from "@/components/FeaturedProducts";
 import { prisma } from "@/lib/prisma";
 
 export default async function HomePage() {
-  const products = await prisma.product.findMany();
+
+  const products =
+    await prisma.product.findMany();
 
   const settings = {
-    companyName: "My Business",
-    tagline: "Professional products and services",
-    whatsappNumber: "919999999999"
+    companyName: "VINTAGE GHAR",
+    tagline: "Lets Make the Memories Visible",
+    whatsappNumber: "917075629604"
   };
 
   return (
@@ -19,11 +21,15 @@ export default async function HomePage() {
         tagline={settings.tagline}
       />
 
-      <Stats totalProducts={products.length} />
+      <Stats
+        totalProducts={products.length}
+      />
 
       <FeaturedProducts
         products={products}
-        whatsappNumber={settings.whatsappNumber}
+        whatsappNumber={
+          settings.whatsappNumber
+        }
       />
     </>
   );

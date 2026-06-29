@@ -3,14 +3,13 @@ type Product = {
   name: string;
   description: string;
   price: number;
-  discountPrice: number | null;
   imageUrl: string;
 };
 
 export default function ProductCard({
   product,
   whatsappNumber
-}: {
+}:{
   product: Product;
   whatsappNumber: string;
 }) {
@@ -19,7 +18,6 @@ export default function ProductCard({
     `https://wa.me/${whatsappNumber}?text=` +
     encodeURIComponent(
       `Hi, I want to buy:
-
 Product: ${product.name}
 Price: ₹${product.price}`
     );
@@ -30,8 +28,7 @@ Price: ₹${product.price}`
         background:"white",
         borderRadius:"15px",
         overflow:"hidden",
-        boxShadow:"0 5px 15px rgba(0,0,0,.1)",
-        transition:"0.3s",
+        boxShadow:"0 5px 15px rgba(0,0,0,.1)"
       }}
     >
       <img
@@ -48,22 +45,9 @@ Price: ₹${product.price}`
 
         <h3>{product.name}</h3>
 
-        <p
-          style={{
-            color:"#666",
-            margin:"10px 0"
-          }}
-        >
-          {product.description}
-        </p>
+        <p>{product.description}</p>
 
-        <h2
-          style={{
-            color:"#2563eb"
-          }}
-        >
-          ₹{product.price}
-        </h2>
+        <h2>₹{product.price}</h2>
 
         <a
           href={whatsappLink}
@@ -71,11 +55,12 @@ Price: ₹${product.price}`
           rel="noreferrer"
           style={{
             display:"inline-block",
-            marginTop:"15px",
+            marginTop:"10px",
             background:"#25D366",
             color:"white",
             padding:"10px 20px",
-            borderRadius:"8px"
+            borderRadius:"8px",
+            textDecoration:"none"
           }}
         >
           Buy Now
