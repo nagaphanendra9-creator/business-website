@@ -50,7 +50,7 @@ export default function Navbar() {
         <Link href="/">Home</Link>
         <Link href="/products">Products</Link>
         <Link href="/contact">Contact</Link>
-        <Link href="/login">Owner Login</Link>
+        <Link href="/admin/login">Owner Login</Link>
       </div>
     </nav>
   );
