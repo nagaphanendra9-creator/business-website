@@ -3,18 +3,16 @@ import { hash } from "bcryptjs";
 
 async function main() {
 
+  await prisma.adminUser.deleteMany();
+
   const passwordHash = await hash(
-    "Admin@12345",
+    "123456",
     10
   );
 
-  await prisma.adminUser.upsert({
-    where:{
-      email:"admin@example.com"
-    },
-    update:{},
-    create:{
-      email:"admin@example.com",
+  await prisma.adminUser.create({
+    data:{
+      email:"admin@gmail.com",
       passwordHash,
       name:"Admin"
     }
@@ -26,5 +24,5 @@ async function main() {
 main()
 .catch(console.error)
 .finally(async()=>{
- await prisma.$disconnect();
+  await prisma.$disconnect();
 });

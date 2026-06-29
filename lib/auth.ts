@@ -30,31 +30,26 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials) {
 
-        if (
-          !credentials?.email ||
-          !credentials?.password
-        ) {
-          return null;
-        }
+        console.log("EMAIL:", credentials?.email);
 
-        const user =
-          await prisma.adminUser.findUnique({
-            where: {
-              email: credentials.email
-            }
-          });
+        const user = await prisma.adminUser.findUnique({
+          where: {
+            email: credentials?.email
+          }
+        });
+
+        console.log("USER FOUND:", user);
 
         if (!user) return null;
 
-        const validPassword =
-          await compare(
-            credentials.password,
-            user.passwordHash
-          );
+        const validPassword = await compare(
+          credentials!.password,
+          user.passwordHash
+        );
 
-        if (!validPassword) {
-          return null;
-        }
+        console.log("PASSWORD MATCH:", validPassword);
+
+        if (!validPassword) return null;
 
         return {
           id: user.id,
