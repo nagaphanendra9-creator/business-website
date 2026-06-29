@@ -13,14 +13,11 @@ export default function LoginPage() {
 
   async function login(){
 
-    const result = await signIn(
-      "credentials",
-      {
-        email,
-        password,
-        redirect:false
-      }
-    );
+    const result = await signIn("credentials",{
+      email,
+      password,
+      redirect:false
+    });
 
     if(result?.ok){
       router.push("/admin");
@@ -29,9 +26,8 @@ export default function LoginPage() {
     }
   }
 
-  return(
+  return (
     <div style={{padding:"40px"}}>
-
       <h1>Owner Login</h1>
 
       <input
@@ -55,7 +51,6 @@ export default function LoginPage() {
       <button onClick={login}>
         Login
       </button>
-
     </div>
   );
 }
