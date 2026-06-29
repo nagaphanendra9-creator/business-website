@@ -1,4 +1,5 @@
-import Image from "next/image";
+"use client";
+
 import Link from "next/link";
 
 export default function Navbar() {
@@ -8,35 +9,42 @@ export default function Navbar() {
         display:"flex",
         justifyContent:"space-between",
         alignItems:"center",
-        padding:"15px 30px",
-        background:"#ffffff",
-        borderBottom:"1px solid #ddd"
+        padding:"12px 20px",
+        background:"#fff",
+        flexWrap:"wrap",
+        position:"sticky",
+        top:0,
+        zIndex:1000
       }}
     >
-      <Link
-        href="/"
+      <div
         style={{
           display:"flex",
           alignItems:"center",
-          gap:"10px",
-          textDecoration:"none",
-          color:"black"
+          gap:"10px"
         }}
       >
-        <Image
+        <img
           src="/logo.png"
-          alt="Logo"
           width={50}
           height={50}
+          style={{
+            borderRadius:"10px",
+            objectFit:"cover"
+          }}
         />
 
-        <h2>My Business</h2>
-      </Link>
+        <h2 style={{margin:0}}>
+          My Business
+        </h2>
+      </div>
 
       <div
         style={{
           display:"flex",
-          gap:"20px"
+          gap:"15px",
+          flexWrap:"wrap",
+          fontSize:"14px"
         }}
       >
         <Link href="/">Home</Link>

@@ -1,48 +1,44 @@
 export default function Hero({
-  companyName,
-  tagline,
-}: {
-  companyName: string;
-  tagline: string;
-}) {
-  return (
-    <section
-      style={{
-        backgroundImage: "linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)), url('/hero.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "500px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        color: "white"
-      }}
-    >
-      <div
-        style={{
-          background: "rgba(0,0,0,0.5)",
-          padding: "40px",
-          borderRadius: "15px"
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "50px",
-            marginBottom: "20px"
-          }}
-        >
-          {companyName}
-        </h1>
+ companyName,
+ tagline
+}:any){
 
-        <p
-          style={{
-            fontSize: "22px"
-          }}
-        >
-          {tagline}
-        </p>
-      </div>
-    </section>
-  );
+ return(
+  <div
+   style={{
+    backgroundImage:"url('/hero.jpg')",
+    backgroundSize:"cover",
+    backgroundPosition:"center",
+    minHeight:"60vh",
+    display:"flex",
+    alignItems:"center",
+    justifyContent:"center",
+    textAlign:"center",
+    padding:"20px"
+   }}
+  >
+   <div
+    style={{
+      background:"rgba(0,0,0,.5)",
+      padding:"30px",
+      borderRadius:"15px",
+      color:"white",
+      width:"90%",
+      maxWidth:"500px"
+    }}
+   >
+    <h1
+     style={{
+       fontSize:"42px",
+       marginBottom:"10px"
+     }}
+    >
+      {companyName}
+    </h1>
+
+    <p>{tagline}</p>
+
+   </div>
+  </div>
+ )
 }
