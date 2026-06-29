@@ -5,15 +5,14 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-
   const router = useRouter();
 
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
 
-  async function login(){
+  async function handleLogin() {
 
-    const result = await signIn("credentials",{
+    const result = await signIn("credentials", {
       email,
       password,
       redirect:false
@@ -22,7 +21,7 @@ export default function LoginPage() {
     if(result?.ok){
       router.push("/admin");
     } else {
-      alert("Wrong login");
+      alert("Wrong email or password");
     }
   }
 
@@ -48,7 +47,7 @@ export default function LoginPage() {
 
       <br/><br/>
 
-      <button onClick={login}>
+      <button onClick={handleLogin}>
         Login
       </button>
     </div>
