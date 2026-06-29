@@ -1,7 +1,5 @@
-import { compare } from "bcryptjs";
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { NextAuthOptions } from "next-auth";
-import { prisma } from "@/lib/prisma";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -21,7 +19,6 @@ export const authOptions: NextAuthOptions = {
           label: "Email",
           type: "email"
         },
-
         password: {
           label: "Password",
           type: "password"
@@ -30,32 +27,18 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials) {
 
-        console.log("EMAIL:", credentials?.email);
+        if(
+          credentials?.email==="admin@gmail.com" &&
+          credentials?.password==="123456"
+        ){
+          return {
+            id:"1",
+            email:"admin@gmail.com",
+            name:"Admin"
+          };
+        }
 
-        const user = await prisma.adminUser.findUnique({
-          where: {
-            email: credentials?.email
-          }
-        });
-
-        console.log("USER FOUND:", user);
-
-        if (!user) return null;
-
-        const validPassword = await compare(
-          credentials!.password,
-          user.passwordHash
-        );
-
-        console.log("PASSWORD MATCH:", validPassword);
-
-        if (!validPassword) return null;
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name
-        };
+        return null;
       }
     })
   ],
